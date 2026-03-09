@@ -1,0 +1,7 @@
+[
+  { "name": "Sweets", "image": "/categories/sweets.jpg" },
+  { "name": "Hot Items / Savouries", "image": "/categories/savouries.jpg" },
+  { "name": "Pickles", "image": "/categories/pickles.jpg" },
+  { "name": "Ghee", "image": "/categories/ghee.jpg" },
+  { "name": "Honey", "image": "/categories/honey.jpg" }
+]
