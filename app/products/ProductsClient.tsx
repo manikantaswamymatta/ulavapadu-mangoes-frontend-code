@@ -334,7 +334,6 @@ export default function ProductsClient() {
                     </div>
 
                     <div className="z-product-actions">
-                      <span>25-35 mins</span>
                       <button
                         className={addedNotification === productKey ? "added" : ""}
                         onClick={() => handleAddToCart(product, index)}
