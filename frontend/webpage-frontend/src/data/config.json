@@ -1,0 +1,42 @@
+{
+  "businessInfo": {
+    "name": "Ulavapadu Mangoes",
+    "tagline": "Fresh and organic mangoes directly from farm to your home",
+    "phone": "89778 48437",
+    "alternatePhone": "86889 29143",
+    "whatsappNumber": "918977848437",
+    "email": "ulavapadumangoes07@gmail.com",
+    "address": "Hyderabad",
+    "googleMapsUrl": "https://maps.google.com/?q=Hyderabad",
+    "instagram": "https://instagram.com/ulavapadumangoesco",
+    "instagramHandle": "@ULAVAPADUMANGOESCO"
+  },
+  "delivery": {
+    "available": true,
+    "freeDeliveryThreshold": 1000,
+    "deliveryFee": 100,
+    "deliveryArea": "Available across India"
+  },
+  "franchise": {
+    "title": "Franchise With Us",
+    "benefits": [
+      "License to use Ulavapadu Mangoes brand name and logo",
+      "Promotion and marketing support",
+      "Training and demonstration",
+      "3 sets of uniforms",
+      "10x10 setup with brand and logo",
+      "Menu board (standee) and promotional pamphlets",
+      "Brand logo packing boxes and fruit stand",
+      "Day-to-day stock supply from farm"
+    ],
+    "branches": [
+      "TNGO'S COLONY",
+      "TNGO'S PHASE 2",
+      "NALLAGANDLA"
+    ]
+  },
+  "upiDetails": {
+    "upiAddress": "8977848437-4@ybl",
+    "qrCodeImage": "/payment-qr-pic.png"
+  }
+}
