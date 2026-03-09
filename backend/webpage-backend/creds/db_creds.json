@@ -1,0 +1,3 @@
+{
+  "database_url": "postgresql://maharaja_db_railway:RailwayApp%402026SecurePass123@shortline.proxy.rlwy.net:43227/maharaja_railway?sslmode=require&connect_timeout=10"
+}
