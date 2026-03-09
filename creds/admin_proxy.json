@@ -1,5 +1,5 @@
 {
-  "backendBaseUrl": "http://127.0.0.1:8000/admin-api",
+  "backendBaseUrl": "respectful-celebration-production.up.railway.app/admin-api",
   "backendInternalToken": "mHF_internal_3ca6f2d180f84f57b2a1e5c1d7a0b913",
   "adminUsers": [
     {
