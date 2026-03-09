@@ -1,9 +1,0 @@
-{
-  "API_CACHE_TTL_SECONDS": 18000,
-  "DB_POOL_SIZE": 1,
-  "DB_MAX_OVERFLOW": 0,
-  "DB_POOL_TIMEOUT": 15,
-  "DB_POOL_RECYCLE": 300,
-  "DB_SCHEMA": "ulavapadumangoes_schema",
-  "INTERNAL_API_TOKEN": "mhf_int_2026_9f4c2a7b81d64e2bb5a3d8c1f0e6ab77"
-}
