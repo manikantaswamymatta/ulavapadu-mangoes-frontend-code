@@ -1,0 +1,545 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Sora:wght@400;500;600;700;800&display=swap');
+
+.mango-home {
+  background:
+    radial-gradient(1200px 500px at 100% -10%, rgba(255, 221, 112, 0.3), transparent 60%),
+    radial-gradient(900px 460px at -10% 0%, rgba(122, 186, 71, 0.2), transparent 58%),
+    #fffcf1;
+  color: #15330f;
+  font-family: "Sora", sans-serif;
+  padding-bottom: 34px;
+}
+
+.mango-home__container {
+  width: min(1220px, 100%);
+  margin: 0 auto;
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+.mango-home__hero {
+  position: relative;
+  overflow: hidden;
+  padding: 42px 0 18px;
+  z-index: 1;
+}
+
+.mango-home__hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, #ffe38a 0%, #ffd14e 32%, #9cd65f 76%, #6ca93f 100%),
+    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.12));
+}
+
+.mango-home__hero-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+
+.mango-home__campaign {
+  margin: 0;
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  background: rgba(21, 51, 15, 0.14);
+  color: #173f12;
+}
+
+.mango-home__hero h1 {
+  margin: 16px 0 8px;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  color: #12330f;
+  max-width: 760px;
+  overflow-wrap: anywhere;
+}
+
+.mango-home__subtext {
+  margin: 0;
+  max-width: 740px;
+  line-height: 1.7;
+  color: #234a1d;
+  font-size: 1rem;
+}
+
+
+.mango-home__hero-metrics {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 760px;
+}
+
+.mango-home__hero-metrics article {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(21, 51, 15, 0.14);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.mango-home__hero-metrics strong {
+  display: block;
+  font-size: 1.15rem;
+  color: #12330f;
+}
+
+.mango-home__hero-metrics span {
+  color: #3d622f;
+  font-size: 12px;
+}
+
+.mango-home__showcase {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.mango-home__showcase > a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mango-home__showcase article {
+  background: #fff;
+  border: 1px solid #e8efd7;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mango-home__showcase img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #fff;
+}
+
+.mango-home__showcase div {
+  padding: 12px;
+}
+
+.mango-home__showcase h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.mango-home__showcase p {
+  margin: 8px 0 0;
+  color: #55714d;
+  font-size: 13px;
+}
+
+.mango-home__section {
+  margin-top: 28px;
+}
+
+.mango-home__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.mango-home__section-header h2 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(1.4rem, 3vw, 2.1rem);
+}
+
+.mango-home__section-header a {
+  color: #3f7f2f;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.mango-home__category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.mango-home__category-card {
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  border: 1px solid #e8efd7;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.mango-home__category-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #fff;
+}
+
+.mango-home__category-card h3 {
+  margin: 0;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.mango-home__message {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #48653a;
+}
+
+.mango-home__message--error {
+  color: #b2311a;
+}
+
+.mango-home__product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.mango-home__product-card {
+  background: #fff;
+  border: 1px solid #e5ecd2;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.mango-home__product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  background: #fff;
+}
+
+.mango-home__product-content {
+  padding: 12px;
+}
+
+.mango-home__product-content h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.mango-home__product-content p {
+  margin: 6px 0 10px;
+  font-size: 12px;
+  color: #58774c;
+}
+
+.mango-home__weights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mango-home__weights button {
+  border: 1px solid var(--mango-yellow-200);
+  background: linear-gradient(180deg, var(--mango-yellow-50) 0%, #fff4cf 100%);
+  color: #5a4305;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mango-home__weights button.active {
+  border-color: #e7a900;
+  background: linear-gradient(180deg, #ffce52 0%, var(--mango-yellow-500) 100%);
+  color: #2e2400;
+}
+
+.mango-home__weights button:focus-visible {
+  outline: 2px solid var(--mango-yellow-500);
+  outline-offset: 2px;
+}
+
+.mango-home__product-footer {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mango-home__product-footer strong {
+  color: #2e5e23;
+}
+
+.mango-home__product-footer button {
+  border: 1px solid #2f6622;
+  background: linear-gradient(180deg, #f6fbe9 0%, #e8f3d1 100%);
+  color: #29551d;
+  border-radius: 10px;
+  padding: 7px 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mango-home__product-footer button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #fff2c9 0%, #ffe08a 100%);
+  border-color: #d09b13;
+  color: #3b2b00;
+}
+
+.mango-home__process {
+  border: 1px solid #e0ebc9;
+  border-radius: 18px;
+  padding: 20px;
+  background: linear-gradient(180deg, #fffef4 0%, #f6fbe8 100%);
+}
+
+.mango-home__process h2 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.mango-home__process > div {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mango-home__process article {
+  background: #fff;
+  border: 1px solid #e4ecd0;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.mango-home__process h3 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+
+.mango-home__process p {
+  margin: 0;
+  color: #58704f;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.mango-home__cta {
+  margin-top: 28px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #3f7f2f 0%, #2f6622 55%, #5f9738 100%);
+  color: #fff;
+  text-align: center;
+  padding-top: 34px;
+  padding-bottom: 34px;
+}
+
+.mango-home__franchise {
+  border: 1px solid #dfb341;
+  border-radius: 18px;
+  padding: 20px;
+  background:
+    linear-gradient(160deg, rgba(255, 216, 99, 0.2) 0%, rgba(255, 248, 225, 0.9) 48%, rgba(141, 188, 84, 0.16) 100%),
+    #fffdf5;
+}
+
+.mango-home__franchise h2 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  color: #3f2a00;
+}
+
+.mango-home__franchise > p {
+  margin: 10px 0 0;
+  color: #5e4b1f;
+  line-height: 1.65;
+}
+
+.mango-home__franchise-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.mango-home__franchise-grid article {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(163, 121, 0, 0.18);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  color: #4f3f1a;
+  line-height: 1.55;
+}
+
+.mango-home__franchise-branches {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(163, 121, 0, 0.4);
+  color: #3f2f0a;
+}
+
+.mango-home__cta h2 {
+  margin: 0;
+  font-family: "DM Serif Display", serif;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.mango-home__cta p {
+  margin: 10px auto 0;
+  max-width: 760px;
+  line-height: 1.7;
+}
+
+.mango-home__cta div {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.mango-home__cta a {
+  text-decoration: none;
+  background: linear-gradient(180deg, #ffd66b 0%, #e9ad14 100%);
+  color: #342700;
+  font-weight: 700;
+  border: 1px solid #d79f11;
+  box-shadow: 0 8px 18px rgba(195, 142, 14, 0.24);
+  padding: 11px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.mango-home__cta a.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  color: #fff;
+  box-shadow: none;
+}
+
+.mango-home__cta a:hover {
+  transform: translateY(-1px);
+}
+
+@media (max-width: 900px) {
+  .mango-home__hero-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mango-home__showcase {
+    grid-template-columns: 1fr;
+  }
+
+  .mango-home__process > div {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .mango-home__hero {
+    padding-top: 24px;
+  }
+
+  .mango-home__container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .mango-home__hero-content {
+    padding-top: 16px;
+    padding-bottom: 30px;
+  }
+
+  .mango-home__showcase {
+    margin-top: 12px;
+  }
+
+  .mango-home__campaign {
+    font-size: 10px;
+  }
+
+  .mango-home__subtext {
+    font-size: 0.92rem;
+  }
+
+  .mango-home__hero-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .mango-home__section {
+    margin-top: 22px;
+  }
+
+  .mango-home__section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .mango-home__section-header--category,
+  .mango-home__section-header--bestsellers {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .mango-home__section-header--category h2,
+  .mango-home__section-header--category a,
+  .mango-home__section-header--bestsellers h2,
+  .mango-home__section-header--bestsellers a {
+    white-space: nowrap;
+  }
+
+  .mango-home__section-header--category h2,
+  .mango-home__section-header--bestsellers h2 {
+    font-size: clamp(1.45rem, 6vw, 1.75rem);
+  }
+
+  .mango-home__category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mango-home__category-card img {
+    height: 96px;
+  }
+
+  .mango-home__product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mango-home__process {
+    padding: 14px;
+  }
+
+  .mango-home__cta {
+    margin-top: 22px;
+    border-radius: 14px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .mango-home__cta div {
+    flex-direction: column;
+  }
+}
