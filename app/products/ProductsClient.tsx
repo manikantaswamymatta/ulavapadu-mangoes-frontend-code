@@ -283,7 +283,6 @@ export default function ProductsClient() {
 
         <div className="z-products-meta">
           <p>{sortedProducts.length} items found</p>
-          <p>Delivery in 25-35 mins</p>
         </div>
 
         <div className="z-products-grid">
