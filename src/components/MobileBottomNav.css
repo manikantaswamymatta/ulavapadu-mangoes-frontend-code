@@ -37,11 +37,17 @@
 
 .mobile-tab.active {
   color: #121212;
-  background: linear-gradient(180deg, #f1bc22 0%, #c99710 100%);
+  background: #ffd200;
 }
 
 .mobile-tab.active .tab-label {
   color: #121212;
+}
+
+.mobile-tab.active:hover,
+.mobile-tab.active:focus-visible {
+  color: #121212;
+  background: #ffd200;
 }
 
 .mobile-tab:hover,
