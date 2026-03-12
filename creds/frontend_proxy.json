@@ -1,4 +1,4 @@
 {
-  "backendBaseUrl": "http://0.0.0.0:8000",
+  "backendBaseUrl": "https://respectful-celebration-production.up.railway.app",
   "internalApiToken": "mhf_int_2026_9f4c2a7b81d64e2bb5a3d8c1f0e6ab77"
 }
