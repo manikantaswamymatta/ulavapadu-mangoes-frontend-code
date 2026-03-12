@@ -1,4 +1,4 @@
-﻿.header {
+.header {
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -35,7 +35,7 @@
 
 .logo h1 {
   margin: 0;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--brand-primary);
   line-height: 1;
@@ -269,7 +269,7 @@
   }
 
   .logo h1 {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .logo img {
@@ -309,6 +309,6 @@
 
 @media (max-width: 420px) {
   .logo h1 {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
