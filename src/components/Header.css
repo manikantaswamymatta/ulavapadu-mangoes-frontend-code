@@ -35,7 +35,7 @@
 
 .logo h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--brand-primary);
   line-height: 1;
@@ -263,18 +263,22 @@
 
   .header-container {
     padding: 10px 12px;
-    gap: 8px;
+    gap: 6px;
     grid-template-columns: minmax(0, 1fr) auto;
     justify-content: space-between;
   }
 
+  .logo {
+    gap: 8px;
+  }
+
   .logo h1 {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   .logo img {
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
   }
 
   .logo p,
@@ -309,7 +313,6 @@
 
 @media (max-width: 420px) {
   .logo h1 {
-    font-size: 14px;
+    font-size: 18px;
   }
 }
-
