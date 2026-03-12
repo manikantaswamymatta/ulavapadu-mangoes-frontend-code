@@ -37,7 +37,7 @@
 
 .mobile-tab.active {
   color: #121212;
-  background: transparent;
+  background: linear-gradient(180deg, #f1bc22 0%, #c99710 100%);
 }
 
 .mobile-tab.active .tab-label {
