@@ -35,7 +35,7 @@
 
 .logo h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 800;
   color: var(--brand-primary);
   line-height: 1;
@@ -312,3 +312,4 @@
     font-size: 14px;
   }
 }
+
