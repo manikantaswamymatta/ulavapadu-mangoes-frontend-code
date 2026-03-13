@@ -1,0 +1,208 @@
+.about {
+  background: #fffaf3;
+  padding: 100px 20px;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .about-container {
+    gap: 40px;
+  }
+
+  .about {
+    padding: 80px 20px;
+  }
+
+  .about-image img {
+    max-width: 400px;
+  }
+
+  .about-content h2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 60px 20px;
+  }
+
+  .about-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .experience-badge {
+    position: static;
+    display: inline-block;
+    margin-top: 20px;
+    width: auto;
+  }
+
+  .about-content h2 {
+    font-size: 32px;
+  }
+
+  .about-content p {
+    font-size: 16px;
+  }
+
+  .about-points li {
+    font-size: 15px;
+    padding-left: 32px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding: 40px 15px;
+  }
+
+  .about-content h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .about-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .about-points li {
+    font-size: 13px;
+    padding-left: 28px;
+    margin-bottom: 10px;
+  }
+
+  .about-pill {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .about-btn {
+    font-size: 14px;
+    padding: 12px 20px;
+  }
+}
+
+/* LEFT IMAGE */
+.about-image {
+  position: relative;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Experience badge */
+.experience-badge {
+  position: absolute;
+  bottom: -30px;
+  right: 40px;
+  background: linear-gradient(180deg, var(--mango-green-500) 0%, var(--mango-green-700) 100%);
+  color: #fff;
+  padding: 26px 32px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.experience-badge strong {
+  font-size: 36px;
+  display: block;
+}
+
+.experience-badge span {
+  font-size: 16px;
+}
+
+/* RIGHT CONTENT */
+.about-pill {
+  background: #f3dcc0;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+.about-content h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 52px;
+  margin-bottom: 20px;
+}
+
+.about-content p {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
+
+/* Bullet points */
+.about-points {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.about-points li {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 14px;
+  font-size: 17px;
+  color: #444;
+}
+
+.about-points li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #f3dcc0;
+  color: var(--brand-primary);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* Button */
+.about-btn {
+  display: inline-block;
+  background: var(--brand-primary);
+  color: #fff;
+  padding: 16px 30px;
+  border-radius: 14px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.about-btn:hover {
+  background: var(--brand-primary-strong);
+  transform: translateY(-2px);
+}
