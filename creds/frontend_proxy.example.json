@@ -1,4 +1,0 @@
-{
-  "backendBaseUrl": "https://your-backend-url",
-  "internalApiToken": "same-token-as-backend-code-creds-backend_config-json"
-}
