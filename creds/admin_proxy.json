@@ -1,5 +1,5 @@
 {
-  "backendBaseUrl": "http://127.0.0.1:8090",
+  "backendBaseUrl": "https://respectful-celebration-production.up.railway.app",
   "backendInternalToken": "mHF_internal_3ca6f2d180f84f57b2a1e5c1d7a0b913",
   "adminUsers": [
     {
