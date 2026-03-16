@@ -134,6 +134,7 @@ export default function CheckoutPage() {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isAwaitingRazorpayApproval, setIsAwaitingRazorpayApproval] = useState(false);
   const [isPaymentCompleted, setIsPaymentCompleted] = useState(false);
   const [isNavigatingToSuccess, setIsNavigatingToSuccess] = useState(false);
   const [isInAppBrowser, setIsInAppBrowser] = useState(false);
@@ -332,7 +333,8 @@ export default function CheckoutPage() {
       };
 
       // Open Razorpay payment modal
-      openRazorpay(orderData.payment_id, orderData.razorpay_key_id, async (response) => {
+      setIsAwaitingRazorpayApproval(true);
+      const paymentStarted = openRazorpay(orderData.payment_id, orderData.razorpay_key_id, async (response) => {
         try {
           const verifyRes = await fetch(`${BACKEND_PROXY_API}?path=${encodeURIComponent("/payments/verify")}`, {
             method: "POST",
@@ -361,10 +363,16 @@ export default function CheckoutPage() {
           const verifyMessage =
             verifyErr instanceof Error ? verifyErr.message : "Payment verification failed.";
           alert(`${verifyMessage} Please contact support with your payment reference.`);
+          setIsAwaitingRazorpayApproval(false);
         }
       }, (failureMessage) => {
         alert(failureMessage);
+        setIsAwaitingRazorpayApproval(false);
       });
+
+      if (!paymentStarted) {
+        setIsAwaitingRazorpayApproval(false);
+      }
     } catch (error) {
       let message = "Order placement failed. Please contact support.";
       if (error instanceof Error) {
@@ -582,9 +590,9 @@ export default function CheckoutPage() {
             <button
               type="submit"
               className="checkout-btn"
-              disabled={isLoading}
+              disabled={isLoading || isAwaitingRazorpayApproval}
             >
-              {isLoading ? "Processing..." : "Place Order"}
+              {isLoading || isAwaitingRazorpayApproval ? "Processing..." : "Place Order"}
             </button>
           </form>
         </div>
