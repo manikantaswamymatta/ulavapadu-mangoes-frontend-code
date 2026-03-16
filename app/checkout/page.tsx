@@ -186,7 +186,7 @@ export default function CheckoutPage() {
   const deliveryFee = getDeliveryRate(formData.state, totalWeightKg);
   const discountAmount = appliedCoupon ? calculateCouponDiscount(subtotal, appliedCoupon) : 0;
   const total = subtotal + deliveryFee - discountAmount;
-  const isPlaceOrderDisabled = isLoading || isAwaitingRazorpayApproval;
+  const isPlaceOrderDisabled = true;
 
   const shippingZones: string[] = Array.isArray((shippingRates as any).zones)
     ? ((shippingRates as any).zones as string[])
@@ -596,7 +596,7 @@ export default function CheckoutPage() {
                 className="checkout-btn"
                 disabled={isPlaceOrderDisabled}
               >
-                {isPlaceOrderDisabled ? "Processing..." : "Place Order"}
+                {isLoading || isAwaitingRazorpayApproval ? "Processing..." : "Place Order"}
               </button>
             </div>
           </form>
