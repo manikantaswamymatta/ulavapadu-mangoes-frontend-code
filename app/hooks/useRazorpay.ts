@@ -1,4 +1,4 @@
-﻿import { useEffect } from "react";
+import { useEffect } from "react";
 
 declare global {
   interface RazorpayErrorPayload {
@@ -43,7 +43,7 @@ export function useRazorpay(orderAmount: number, customerName: string, customerP
     keyId?: string,
     onPaymentSuccess?: (response: RazorpayPaymentResponse) => void,
     onPaymentFailedOrCancelled?: (message: string) => void
-  ) {
+  ): boolean {
     const paymentFailedMessage =
       "Payment Failed\n" +
       "The payment was not completed because it was cancelled." +
@@ -52,18 +52,18 @@ export function useRazorpay(orderAmount: number, customerName: string, customerP
 
     if (!paymentId) {
       alert("Unable to start payment: missing Razorpay order id.");
-      return;
+      return false;
     }
 
     if (typeof window === "undefined" || !window.Razorpay) {
       alert("Payment SDK is not loaded. Please refresh and try again.");
-      return;
+      return false;
     }
 
     const resolvedKeyId = keyId || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
     if (!resolvedKeyId) {
       alert("Razorpay key is not configured. Please contact support.");
-      return;
+      return false;
     }
 
     let isCompleted = false;
@@ -116,6 +116,7 @@ export function useRazorpay(orderAmount: number, customerName: string, customerP
       alert(message);
     });
     rzp.open();
+    return true;
   }
 
   return { openRazorpay };
