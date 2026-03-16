@@ -1,383 +1,396 @@
-.z-products-page {
-  background: #fff;
-  min-height: 100vh;
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCart } from "@/src/context/CartContext";
+import { getPricingData } from "@/src/utils/apiResponseCache";
+import { resolveCatalogImage } from "@/src/features/catalog/catalog.utils";
+import "./ProductsClient.css";
+
+type Product = {
+  product_id?: number;
+  name?: string;
+  description?: string;
+  image?: string;
+  prices?: Record<string, number>;
+  category?: string;
+  stock_qty?: number;
+};
+
+type CategoryGroup = {
+  category?: string;
+  items?: Product[];
+};
+
+function sortPriceValues(prices: Record<string, number> | undefined): string[] {
+  if (!prices || typeof prices !== "object") return [];
+  const keys = Object.keys(prices);
+  const preferredOrder = ["1Kg", "2Kg", "5Kg"];
+  const sorted = [...keys].sort((a, b) => {
+    const ia = preferredOrder.indexOf(a);
+    const ib = preferredOrder.indexOf(b);
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+    return ia - ib;
+  });
+  return sorted;
 }
 
-.z-products-hero {
-  position: relative;
-  overflow: hidden;
-  background: #121212;
-  color: #fff;
-  text-align: center;
-  padding: 52px 18px 36px;
-}
+export default function ProductsClient() {
+  const searchParams = useSearchParams();
+  const { addToCart } = useCart();
+  const [productsData, setProductsData] = useState<CategoryGroup[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("All Items");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [sortBy, setSortBy] = useState<"popular" | "low" | "high">("popular");
+  const [addedNotification, setAddedNotification] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedWeightByKey, setSelectedWeightByKey] = useState<Record<string, string>>({});
 
-.z-products-hero-collage {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  grid-auto-rows: 120px;
-  gap: 4px;
-  opacity: 0.34;
-  z-index: 0;
-}
+  useEffect(() => {
+    getPricingData()
+      .then((data) => {
+        const groups = Array.isArray(data?.categories) ? data.categories : [];
+        setProductsData(groups);
+      })
+      .catch(() => {
+        setProductsData([]);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
-.z-products-hero-collage img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  filter: saturate(1.05) contrast(1.02);
-}
+  const categories = useMemo(
+    () => ["All Items", ...productsData.map((group) => group.category).filter((name): name is string => !!name)],
+    [productsData]
+  );
 
-.z-products-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.44) 0%, rgba(0, 0, 0, 0.34) 100%);
-  z-index: 1;
-}
+  const allProducts: Product[] = useMemo(
+    () =>
+      productsData.flatMap((group) =>
+        (Array.isArray(group?.items) ? group.items : []).map((item, index) => ({
+          ...item,
+          category: group.category || `Category ${index + 1}`,
+        }))
+      ),
+    [productsData]
+  );
 
-.z-products-hero h1,
-.z-products-hero p,
-.z-products-search-wrap {
-  position: relative;
-  z-index: 2;
-}
+  const heroImages = useMemo(() => {
+    const uniqueImages = new Set<string>();
 
-.z-products-hero h1 {
-  margin: 0;
-  font-size: clamp(2rem, 4vw, 2.9rem);
-}
+    allProducts.forEach((product) => {
+      const resolved = resolveCatalogImage(product.image, "");
+      if (resolved && resolved.trim().length > 0) {
+        uniqueImages.add(resolved);
+      }
+    });
 
-.z-products-hero p {
-  margin: 8px 0 22px;
-  opacity: 0.95;
-}
+    const finalImages = Array.from(uniqueImages);
+    if (finalImages.length === 0) {
+      return ["/ulavapadumangoes-logo-v2.png"];
+    }
 
-.z-products-search-wrap {
-  max-width: 900px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: 10px;
-}
+    // Build enough tiles so the collage looks complete even with a small catalog.
+    const minTiles = 18;
+    while (finalImages.length < minTiles) {
+      finalImages.push(finalImages[finalImages.length % Math.max(1, uniqueImages.size)]);
+    }
 
-.z-products-search-box {
-  position: relative;
-}
+    return finalImages.slice(0, Math.max(minTiles, finalImages.length));
+  }, [allProducts]);
 
-.z-products-search-wrap input,
-.z-products-search-wrap select {
-  border: none;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font-size: 14px;
-  width: 100%;
-}
+  const productNames = useMemo(() => {
+    const names = allProducts
+      .map((product) => product.name)
+      .filter((name): name is string => typeof name === "string" && name.trim().length > 0);
+    return Array.from(new Set(names));
+  }, [allProducts]);
 
-.z-products-suggestions {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 6px);
-  background: #fff;
-  border: 1px solid #e9dece;
-  border-radius: 12px;
-  max-height: 240px;
-  overflow-y: auto;
-  box-shadow: 0 12px 24px rgba(41, 24, 11, 0.14);
-  z-index: 12;
-}
+  const normalizedSearch = searchQuery.trim().toLowerCase();
 
-.z-products-suggestion-item {
-  width: 100%;
-  border: none;
-  border-bottom: 1px solid #f1e6d7;
-  background: #fff;
-  color: #2a1e12;
-  text-align: left;
-  padding: 12px;
-  font-size: 14px;
-}
+  const searchSuggestions = useMemo(() => {
+    if (!normalizedSearch) {
+      return [];
+    }
 
-.z-products-suggestion-item:last-child {
-  border-bottom: none;
-}
+    const startsWithMatches = productNames.filter((name) => name.toLowerCase().startsWith(normalizedSearch));
+    const containsMatches = productNames.filter(
+      (name) => !name.toLowerCase().startsWith(normalizedSearch) && name.toLowerCase().includes(normalizedSearch)
+    );
+    return [...startsWithMatches, ...containsMatches].slice(0, 8);
+  }, [normalizedSearch, productNames]);
 
-.z-products-search-empty {
-  margin: 0;
-  padding: 12px;
-  color: #6d5b49;
-  font-size: 13px;
-  text-align: left;
-}
+  const showSuggestions = isSearchFocused && normalizedSearch.length > 0;
 
-.z-sort-select {
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--brand-primary) 50%),
-    linear-gradient(135deg, var(--brand-primary) 50%, transparent 50%);
-  background-position: calc(100% - 16px) calc(50% - 2px), calc(100% - 11px) calc(50% - 2px);
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  padding-right: 34px;
-}
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    if (value.trim().length > 0) {
+      setSelectedCategory("All Items");
+    }
+  };
 
-.z-sort-mobile {
-  display: none;
-}
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setSearchQuery("");
+    setIsSearchFocused(false);
+  };
 
-.z-sort-chip {
-  border: 1px solid #cf9a0f;
-  background: linear-gradient(180deg, #ffd35d 0%, #e2ae17 100%);
-  color: #121212;
-  border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 12px;
-  font-weight: 700;
-}
+  const filteredProducts = useMemo(() => {
+    const byCategory = allProducts.filter((product) =>
+      selectedCategory === "All Items" ? true : product.category === selectedCategory
+    );
+    return byCategory.filter((product) => {
+      if (!searchQuery.trim()) return true;
+      const haystack = `${product.name || ""} ${product.category || ""}`.toLowerCase();
+      return haystack.includes(searchQuery.trim().toLowerCase());
+    });
+  }, [allProducts, selectedCategory, searchQuery]);
 
-.z-sort-chip.active {
-  background: linear-gradient(180deg, #ffc62f 0%, #dc9f00 100%);
-  color: #121212;
-  border-color: #bf8900;
-}
+  const sortedProducts = useMemo(() => {
+    const getLowestPrice = (product: Product): number => {
+      const values = Object.values(product.prices || {}).filter((price) => typeof price === "number");
+      return values.length > 0 ? Math.min(...values) : 0;
+    };
 
-.z-products-shell {
-  width: min(1240px, 100%);
-  margin: 0 auto;
-  padding: 26px 16px 42px;
-}
+    const next = [...filteredProducts];
+    if (sortBy === "low") {
+      next.sort((a, b) => getLowestPrice(a) - getLowestPrice(b));
+    } else if (sortBy === "high") {
+      next.sort((a, b) => getLowestPrice(b) - getLowestPrice(a));
+    }
+    return next;
+  }, [filteredProducts, sortBy]);
 
-.z-category-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 16px;
-}
+  useEffect(() => {
+    const requestedCategory = searchParams.get("category");
+    const requestedSearch = searchParams.get("q");
 
-.z-chip {
-  border: 1px solid var(--mango-yellow-200);
-  background: linear-gradient(180deg, var(--mango-yellow-50) 0%, #fff4cf 100%);
-  color: #121212;
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 700;
-}
+    if (requestedSearch && requestedSearch.trim().length > 0) {
+      setSearchQuery(requestedSearch);
+      setSelectedCategory("All Items");
+      return;
+    }
 
-.z-chip:hover {
-  border-color: var(--mango-yellow-500);
-  background: linear-gradient(180deg, #fff6d9 0%, var(--mango-yellow-100) 100%);
-}
+    if (requestedCategory && categories.includes(requestedCategory)) {
+      setSelectedCategory(requestedCategory);
+    } else {
+      setSelectedCategory("All Items");
+    }
 
-.z-chip.active {
-  border-color: #e7a900;
-  color: #121212;
-  background: linear-gradient(180deg, #ffce52 0%, var(--mango-yellow-500) 100%);
-}
+    setSearchQuery("");
+  }, [searchParams, categories]);
 
-.z-products-meta {
-  display: flex;
-  justify-content: space-between;
-  color: #707070;
-  font-size: 14px;
-  margin-bottom: 16px;
-}
+  const getProductKey = (product: Product, index: number): string =>
+    typeof product.product_id === "number" ? `pid-${product.product_id}` : `idx-${index}-${product.name || "product"}`;
 
-.z-products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 14px;
-}
+  const getSelectedWeight = (product: Product, index: number): string => {
+    const key = getProductKey(product, index);
+    const configured = selectedWeightByKey[key];
+    if (configured) return configured;
+    const available = sortPriceValues(product.prices);
+    return available[0] || "";
+  };
 
-.z-product-card {
-  border: 1px solid #eeeeee;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+  const handleAddToCart = (product: Product, index: number) => {
+    const selectedWeight = getSelectedWeight(product, index);
+    const price = (product.prices || {})[selectedWeight];
+    const hasStockQty = typeof product.stock_qty === "number";
+    const stockQty = hasStockQty ? Number(product.stock_qty) : null;
+    if (typeof product.product_id !== "number" || typeof price !== "number") {
+      return;
+    }
 
-.z-product-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-}
+    if (hasStockQty && (stockQty ?? 0) <= 0) {
+      return;
+    }
 
-.z-product-image-wrap {
-  position: relative;
-  height: auto;
-  background: #fff;
-  padding: 8px 8px 0;
-}
+    const added = addToCart({
+      product_id: product.product_id,
+      name: product.name || "Product",
+      image: resolveCatalogImage(product.image, "/ulavapadumangoes-logo-v2.png"),
+      price,
+      weight: selectedWeight || "1Kg",
+      category: product.category || "Mangoes",
+      stock_qty: hasStockQty ? (stockQty ?? undefined) : undefined,
+    });
 
-.z-product-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  background: #fff;
-  border-radius: 18px 18px 10px 10px;
-}
+    if (!added) return;
 
-.z-rating {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  background: #267e3e;
-  border-radius: 8px;
-  padding: 4px 7px;
-}
+    const key = getProductKey(product, index);
+    setAddedNotification(key);
+    setTimeout(() => setAddedNotification(null), 2000);
+  };
 
-.z-product-content {
-  padding: 12px;
-}
+  return (
+    <div className="z-products-page">
+      <div className="z-products-hero">
+        <div className="z-products-hero-collage" aria-hidden="true">
+          {heroImages.map((image, index) => (
+            <img key={`${image}-${index}`} src={image} alt="" loading="lazy" />
+          ))}
+        </div>
+        <h1>Order mangoes online</h1>
+        <p>Explore Ulavapadu mango varieties and mango products</p>
 
-.z-product-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
+        <div className="z-products-search-wrap">
+          <div className="z-products-search-box">
+            <input
+              value={searchQuery}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setTimeout(() => setIsSearchFocused(false), 120)}
+              placeholder="Search products or categories..."
+            />
 
-.z-product-head h3 {
-  margin: 0;
-  font-size: 16px;
-}
+            {showSuggestions && (
+              <div className="z-products-suggestions" role="listbox" aria-label="Product search suggestions">
+                {searchSuggestions.length > 0 ? (
+                  searchSuggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      className="z-products-suggestion-item"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => {
+                        setSearchQuery(suggestion);
+                        setSelectedCategory("All Items");
+                        setIsSearchFocused(false);
+                      }}
+                    >
+                      {suggestion}
+                    </button>
+                  ))
+                ) : (
+                  <p className="z-products-search-empty">No matching products</p>
+                )}
+              </div>
+            )}
+          </div>
 
-.z-product-head strong {
-  color: var(--brand-primary);
-}
+          <select
+            className="z-sort-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as "popular" | "low" | "high")}
+          >
+            <option value="popular">Sort: Popular</option>
+            <option value="low">Price: Low to High</option>
+            <option value="high">Price: High to Low</option>
+          </select>
 
-.z-product-content p {
-  margin: 6px 0 12px;
-  color: #666;
-  font-size: 13px;
-}
+          <div className="z-sort-mobile" role="tablist" aria-label="Sort options">
+            <button
+              type="button"
+              className={`z-sort-chip ${sortBy === "popular" ? "active" : ""}`}
+              onClick={() => setSortBy("popular")}
+            >
+              Popular
+            </button>
+            <button
+              type="button"
+              className={`z-sort-chip ${sortBy === "low" ? "active" : ""}`}
+              onClick={() => setSortBy("low")}
+            >
+              Low to High
+            </button>
+            <button
+              type="button"
+              className={`z-sort-chip ${sortBy === "high" ? "active" : ""}`}
+              onClick={() => setSortBy("high")}
+            >
+              High to Low
+            </button>
+          </div>
+        </div>
+      </div>
 
-.size-options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 12px;
-}
+      <section className="z-products-shell">
+        <div className="z-category-chips">
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`z-chip ${selectedCategory === category ? "active" : ""}`}
+              onClick={() => handleCategorySelect(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
 
-.size-option {
-  border: 1px solid var(--mango-yellow-200);
-  background: linear-gradient(180deg, var(--mango-yellow-50) 0%, #fff4cf 100%);
-  color: #5a4305;
-  border-radius: 10px;
-  min-width: 56px;
-  padding: 7px 12px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
+        <div className="z-products-meta">
+          <p>{sortedProducts.length} items found</p>
+        </div>
 
-.size-option:hover {
-  border-color: var(--mango-yellow-500);
-  background: linear-gradient(180deg, #fff6d9 0%, var(--mango-yellow-100) 100%);
-}
+        <div className="z-products-grid">
+          {loading ? (
+            <div className="z-empty-state">Loading menu...</div>
+          ) : sortedProducts.length === 0 ? (
+            <div className="z-empty-state">No items found for your filter. Try another keyword or category.</div>
+          ) : (
+            sortedProducts.map((product, index) => {
+              const productKey = getProductKey(product, index);
+              const weights = sortPriceValues(product.prices);
+              const selectedWeight = getSelectedWeight(product, index);
+              const selectedPrice = (product.prices || {})[selectedWeight];
+              const hasStockQty = typeof product.stock_qty === "number";
+              const stockQty = hasStockQty ? Number(product.stock_qty) : null;
+              const isOutOfStock = hasStockQty && (stockQty ?? 0) <= 0;
 
-.size-option.active {
-  border-color: #e7a900;
-  background: linear-gradient(180deg, #ffce52 0%, var(--mango-yellow-500) 100%);
-  color: #2e2400;
-  box-shadow: 0 4px 10px rgba(244, 180, 0, 0.28);
-}
+              return (
+                <article key={productKey} className="z-product-card">
+                  <div className="z-product-image-wrap">
+                    <img
+                      src={resolveCatalogImage(product.image, "/ulavapadumangoes-logo-v2.png")}
+                      alt={product.name || "Product"}
+                      className="z-product-image"
+                    />
+                    <span className="z-rating">4.{(index % 5) + 1} ★</span>
+                  </div>
 
-.size-option:focus-visible {
-  outline: 2px solid var(--mango-yellow-500);
-  outline-offset: 2px;
-}
+                  <div className="z-product-content">
+                    <div className="z-product-head">
+                      <h3>{product.name || "Product"}</h3>
+                      <strong>Rs {typeof selectedPrice === "number" ? selectedPrice : "-"}</strong>
+                    </div>
 
-.z-product-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+                    <p>{product.category || "Mangoes"}</p>
 
-.z-product-actions span {
-  font-size: 12px;
-  color: #7c7c7c;
-}
+                    <div className="size-options">
+                      {weights.map((weight) => (
+                        <button
+                          key={weight}
+                          className={`size-option ${selectedWeight === weight ? "active" : ""}`}
+                          onClick={() =>
+                            setSelectedWeightByKey((prev) => ({
+                              ...prev,
+                              [productKey]: weight,
+                            }))
+                          }
+                        >
+                          {weight}
+                        </button>
+                      ))}
+                    </div>
 
-.z-product-actions button {
-  border: 1px solid #2f6622;
-  background: linear-gradient(180deg, #fffef8 0%, #f4fae6 100%);
-  color: #121212;
-  border-radius: 10px;
-  padding: 7px 12px;
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-
-.z-product-actions button:hover {
-  transform: translateY(-1px);
-  border-color: #d09b13;
-  background: linear-gradient(180deg, #fff2c9 0%, #ffe08a 100%);
-  color: #3b2b00;
-}
-
-.z-product-actions button.added {
-  background: #18a558;
-  border-color: #121212;
-  color: #fff;
-}
-
-.z-empty-state {
-  text-align: center;
-  border: 1px dashed #e5e5e5;
-  border-radius: 12px;
-  padding: 40px 12px;
-  color: #666;
-}
-
-@media (max-width: 768px) {
-  .z-products-hero-collage {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    grid-auto-rows: 88px;
-    opacity: 0.28;
-  }
-
-  .z-products-search-wrap {
-    grid-template-columns: 1fr;
-  }
-
-  .z-sort-select {
-    display: none;
-  }
-
-  .z-sort-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-
-  .z-products-meta {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .z-product-image-wrap {
-    padding: 6px 6px 0;
-  }
-
-  .z-product-image {
-    border-radius: 16px 16px 10px 10px;
-  }
-
-  .size-option {
-    min-width: 52px;
-    padding: 8px 10px;
-    font-size: 12px;
-  }
+                    <div className="z-product-actions">
+                      <button
+                        disabled={isOutOfStock}
+                        className={addedNotification === productKey ? "added" : ""}
+                        onClick={() => handleAddToCart(product, index)}
+                      >
+                        {isOutOfStock ? "Out of stock" : addedNotification === productKey ? "Added" : "Add +"}
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              );
+            })
+          )}
+        </div>
+      </section>
+    </div>
+  );
 }
