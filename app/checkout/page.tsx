@@ -186,6 +186,7 @@ export default function CheckoutPage() {
   const deliveryFee = getDeliveryRate(formData.state, totalWeightKg);
   const discountAmount = appliedCoupon ? calculateCouponDiscount(subtotal, appliedCoupon) : 0;
   const total = subtotal + deliveryFee - discountAmount;
+  const isPlaceOrderDisabled = isLoading || isAwaitingRazorpayApproval;
 
   const shippingZones: string[] = Array.isArray((shippingRates as any).zones)
     ? ((shippingRates as any).zones as string[])
@@ -334,7 +335,7 @@ export default function CheckoutPage() {
 
       // Open Razorpay payment modal
       setIsAwaitingRazorpayApproval(true);
-      const paymentStarted = openRazorpay(orderData.payment_id, orderData.razorpay_key_id, async (response) => {
+      openRazorpay(orderData.payment_id, orderData.razorpay_key_id, async (response) => {
         try {
           const verifyRes = await fetch(`${BACKEND_PROXY_API}?path=${encodeURIComponent("/payments/verify")}`, {
             method: "POST",
@@ -369,10 +370,6 @@ export default function CheckoutPage() {
         alert(failureMessage);
         setIsAwaitingRazorpayApproval(false);
       });
-
-      if (!paymentStarted) {
-        setIsAwaitingRazorpayApproval(false);
-      }
     } catch (error) {
       let message = "Order placement failed. Please contact support.";
       if (error instanceof Error) {
@@ -587,13 +584,21 @@ export default function CheckoutPage() {
             </div>
 
             {/* Checkout Button */}
-            <button
-              type="submit"
-              className="checkout-btn"
-              disabled={isLoading || isAwaitingRazorpayApproval}
+            <div
+              title={
+                isPlaceOrderDisabled
+                  ? "Place Order button is disabled until Razorpay approval."
+                  : undefined
+              }
             >
-              {isLoading || isAwaitingRazorpayApproval ? "Processing..." : "Place Order"}
-            </button>
+              <button
+                type="submit"
+                className="checkout-btn"
+                disabled={isPlaceOrderDisabled}
+              >
+                {isPlaceOrderDisabled ? "Processing..." : "Place Order"}
+              </button>
+            </div>
           </form>
         </div>
 
