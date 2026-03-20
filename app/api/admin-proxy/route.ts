@@ -47,6 +47,16 @@ async function handle(request: NextRequest) {
     }
 
     const responseBody = await upstreamResponse.text();
+    if (upstreamResponse.status === 401) {
+      return NextResponse.json(
+        {
+          detail:
+            "Admin backend rejected the request. Check backendBaseUrl and backendInternalToken in creds/admin_proxy.json.",
+        },
+        { status: 502 }
+      );
+    }
+
     return new NextResponse(responseBody, {
       status: upstreamResponse.status,
       headers: responseHeaders,
