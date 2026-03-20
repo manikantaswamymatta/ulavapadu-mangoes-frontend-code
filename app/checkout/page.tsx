@@ -186,7 +186,7 @@ export default function CheckoutPage() {
   const deliveryFee = getDeliveryRate(formData.state, totalWeightKg);
   const discountAmount = appliedCoupon ? calculateCouponDiscount(subtotal, appliedCoupon) : 0;
   const total = subtotal + deliveryFee - discountAmount;
-  const isPlaceOrderDisabled = true;
+  const isPlaceOrderDisabled = isLoading || isAwaitingRazorpayApproval;
 
   const shippingZones: string[] = Array.isArray((shippingRates as any).zones)
     ? ((shippingRates as any).zones as string[])
