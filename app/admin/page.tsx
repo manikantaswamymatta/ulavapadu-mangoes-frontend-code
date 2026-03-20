@@ -33,6 +33,20 @@ function statusClass(status: string): string {
   return `badge badge-${slug}`;
 }
 
+async function readResponseMessage(response: Response, fallback: string): Promise<string> {
+  const text = await response.text();
+  if (!text) {
+    return fallback;
+  }
+
+  try {
+    const payload = JSON.parse(text) as { detail?: string; message?: string };
+    return payload?.detail || payload?.message || fallback;
+  } catch {
+    return text;
+  }
+}
+
 type OrderItem = {
   product_name?: string;
   weight?: string;
@@ -131,19 +145,34 @@ export default function Page() {
       });
 
       if (response.status === 401) {
-        setIsAuthenticated(false);
-        throw new Error("Unauthorized. Please login again.");
+        let sessionAuthenticated = false;
+        try {
+          const sessionResponse = await fetch("/api/admin-session", { cache: "no-store" });
+          if (sessionResponse.ok) {
+            const payload = (await sessionResponse.json()) as { authenticated?: boolean };
+            sessionAuthenticated = Boolean(payload?.authenticated);
+          }
+        } catch {
+          // Fall back to treating this as a session issue if the session check fails.
+        }
+
+        const message = await readResponseMessage(
+          response,
+          sessionAuthenticated
+            ? "Admin backend rejected the request. Check admin proxy configuration."
+            : "Unauthorized. Please login again."
+        );
+
+        if (!sessionAuthenticated) {
+          setIsAuthenticated(false);
+          throw new Error("Unauthorized. Please login again.");
+        }
+
+        throw new Error(message);
       }
 
       if (!response.ok) {
-        let message = `Request failed (${response.status})`;
-        try {
-          const payload = await response.json();
-          message = payload?.detail || payload?.message || message;
-        } catch {
-          const text = await response.text();
-          if (text) message = text;
-        }
+        const message = await readResponseMessage(response, `Request failed (${response.status})`);
         throw new Error(message);
       }
 
