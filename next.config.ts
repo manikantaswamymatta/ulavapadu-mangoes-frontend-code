@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'standalone',
+  output: "standalone",
+  outputFileTracingIncludes: {
+    "/*": ["./creds/admin_proxy.json"],
+  },
   images: {
     unoptimized: true,
     formats: ["image/avif", "image/webp"],
