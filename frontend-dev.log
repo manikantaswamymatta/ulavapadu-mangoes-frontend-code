@@ -1,0 +1,88 @@
+
+> maharaja-home-foods@0.1.0 dev
+> next dev --webpack
+
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\pilla\Desktop\prod data dont touch\ulavapadu-mangoes-project - Copy\frontend\package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\pilla\Desktop\prod data dont touch\ulavapadu-mangoes-project - Copy\frontend\webpage-frontend\package-lock.json
+
+▲ Next.js 16.1.4 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.31.187:3000
+
+✓ Starting...
+✓ Ready in 3.5s
+○ Compiling /admin ...
+ GET /admin 200 in 11.4s (compile: 8.9s, render: 2.5s)
+○ Compiling /api/admin-session ...
+ GET /api/admin-session 200 in 4.7s (compile: 4.6s, render: 99ms)
+ GET /admin 200 in 588ms (compile: 171ms, render: 417ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 2.3s (compile: 914ms, render: 1362ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 2.3s (compile: 921ms, render: 1370ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 2.3s (compile: 916ms, render: 1379ms)
+ GET /api/admin-proxy?path=%2Forders%3Fstatus%3Dpayment_initiated%26limit%3D400 200 in 1595ms (compile: 84ms, render: 1511ms)
+⚠ Found a change in next.config.ts. Restarting the server to apply the changes...
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of C:\Users\pilla\Desktop\prod data dont touch\ulavapadu-mangoes-project - Copy\frontend\package-lock.json as the root directory.
+ To silence this warning, set `outputFileTracingRoot` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/output#caveats for more information.
+ Detected additional lockfiles: 
+   * C:\Users\pilla\Desktop\prod data dont touch\ulavapadu-mangoes-project - Copy\frontend\webpage-frontend\package-lock.json
+
+▲ Next.js 16.1.4 (webpack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.31.187:3000
+
+✓ Starting...
+✓ Ready in 6.9s
+○ Compiling /admin ...
+ GET /admin 200 in 6.1s (compile: 5.2s, render: 891ms)
+ GET /api/admin-session 200 in 783ms (compile: 746ms, render: 37ms)
+ GET /admin 200 in 246ms (compile: 75ms, render: 171ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 1622ms (compile: 417ms, render: 1205ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 1624ms (compile: 413ms, render: 1211ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 1638ms (compile: 415ms, render: 1223ms)
+ GET /admin 200 in 174ms (compile: 77ms, render: 98ms)
+ GET /admin 200 in 347ms (compile: 245ms, render: 102ms)
+ GET /api/admin-session 200 in 575ms (compile: 539ms, render: 36ms)
+ GET /api/shipping-config 200 in 1444ms (compile: 1308ms, render: 137ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 2.8s (compile: 1310ms, render: 1455ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 2.8s (compile: 1312ms, render: 1460ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 2.8s (compile: 1309ms, render: 1466ms)
+ GET /admin 200 in 216ms (compile: 119ms, render: 97ms)
+ GET /api/admin-session 200 in 80ms (compile: 11ms, render: 69ms)
+ GET /api/shipping-config 200 in 84ms (compile: 35ms, render: 49ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 1466ms (compile: 36ms, render: 1431ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 1448ms (compile: 11ms, render: 1437ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 1502ms (compile: 39ms, render: 1463ms)
+ POST /api/admin-login 200 in 364ms (compile: 345ms, render: 19ms)
+ GET /api/shipping-config 200 in 23ms (compile: 10ms, render: 14ms)
+ PUT /api/shipping-config 200 in 21ms (compile: 3ms, render: 18ms)
+ GET /api/shipping-config 200 in 220ms (compile: 7ms, render: 213ms)
+ GET /admin 200 in 245ms (compile: 82ms, render: 164ms)
+ PUT /api/shipping-config 200 in 19ms (compile: 5ms, render: 13ms)
+ GET /api/shipping-config 200 in 53ms (compile: 7ms, render: 46ms)
+ GET /admin 200 in 60ms (compile: 20ms, render: 40ms)
+ POST /api/admin-login 200 in 10ms (compile: 3ms, render: 8ms)
+ GET /api/shipping-config 200 in 8ms (compile: 3ms, render: 5ms)
+ PUT /api/shipping-config 200 in 13ms (compile: 2ms, render: 10ms)
+ PUT /api/shipping-config 200 in 23ms (compile: 3ms, render: 20ms)
+ GET /admin 200 in 194ms (compile: 59ms, render: 135ms)
+ GET /admin 200 in 35ms (compile: 6ms, render: 28ms)
+ GET /admin 200 in 1176ms (compile: 5ms, render: 1171ms)
+ GET /admin 200 in 167ms (compile: 13ms, render: 154ms)
+ GET /api/admin-session 200 in 38ms (compile: 13ms, render: 25ms)
+ GET /api/shipping-config 200 in 102ms (compile: 9ms, render: 93ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 1401ms (compile: 39ms, render: 1362ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 1408ms (compile: 37ms, render: 1371ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 1415ms (compile: 38ms, render: 1378ms)
+ GET /api/shipping-config 200 in 16ms (compile: 6ms, render: 11ms)
+ GET /admin 200 in 1120ms (compile: 563ms, render: 557ms)
+ GET /api/shipping-config 200 in 1784ms (compile: 1683ms, render: 101ms)
+ GET /api/admin-session 200 in 1838ms (compile: 1696ms, render: 143ms)
+ GET /api/admin-proxy?path=%2Fproducts 200 in 3.5s (compile: 1659ms, render: 1821ms)
+ GET /api/admin-proxy?path=%2Forders%3Flimit%3D400 200 in 3.5s (compile: 1656ms, render: 1834ms)
+ GET /api/admin-proxy?path=%2Fcategories 200 in 3.5s (compile: 1657ms, render: 1842ms)

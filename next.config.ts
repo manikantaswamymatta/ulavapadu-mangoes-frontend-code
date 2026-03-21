@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: "standalone",
   outputFileTracingIncludes: {
-    "/*": ["./creds/admin_proxy.json"],
+    "/*": ["./creds/admin_proxy.json", "./creds/shipping_rates.json"],
   },
   images: {
     unoptimized: true,

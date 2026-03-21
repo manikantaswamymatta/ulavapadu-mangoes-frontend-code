@@ -1,0 +1,52 @@
+.floating-cart-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, var(--mango-green-500) 0%, var(--mango-green-700) 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.floating-cart-btn:hover {
+  background: var(--brand-primary-strong);
+  transform: translateY(-2px);
+}
+
+.floating-cart-btn svg {
+  font-size: 22px;
+}
+
+.floating-cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--brand-accent);
+  color: #2c2406;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 2px 6px;
+  min-width: 20px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .floating-cart-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .floating-cart-btn {
+    display: none;
+  }
+}
